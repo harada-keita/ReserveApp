@@ -48,7 +48,7 @@ def Logout(request):
 def ManagerMainMenu(request):
     params = {
         'title' : 'メインメニュー（管理者）',
-        'message' : ''
+        'message' : '色んな配置検討中'
     }
     return render(request, 'ManagerMainMenu.html', params)
 

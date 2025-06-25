@@ -14,27 +14,27 @@
 
     <h2>
         <div align="center">
+            {{message}}
             <select name="example" width="100px">
-                <option value="example1">業務1</option>
-                <option value="example2">業務2</option>
-                <option value="example3">業務3</option>
+                <option value="example1">メニュー1</option>
+                <option value="example2">メニュー2</option>
+                <option value="example3">メニュー3</option>
             </select>
         </div>
     </h2>
 
     <h2>
         <div align="center">
-            <button class="toDetail" type="submit" >業務詳細画面へ</button>
+            <button class="toDetail" type="submit" >メニュー選択</button>
         </div>
     </h2>
 
-
-    <div class="cp_navi03">
-        <ul class="sidenav">
-
-            <li><a href="{% url 'ReserveApp:Logout' %}">ログアウト</a></li>
-        </ul>
-    </div>
+<!-- ブロックを作成して、それにリンクを貼る -->
+<a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
+    href="{% url 'ReserveApp:Logout' %}">
+    <div style="color:black;font-size: 20px;font-weight: bold;">ログアウト</div>
+    <p style="color:black;">ログアウトすると自動でログイン画面へ戻ります。</p>
+</a>
 
     <h3>
         <!--今回遷移先のurlを<form>で書いていたため、ボタンの種類が「submit」でないと起動しない（おそらく）-->
