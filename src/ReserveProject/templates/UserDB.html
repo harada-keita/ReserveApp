@@ -1,0 +1,38 @@
+{% load static %}
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link href="{% static 'css/UserDBStyle.css' %}" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    <form action="{% url 'ManagementApp:UserDB' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="検索">
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>氏名</th>
+            <th>メールアドレス</th>
+            <th>登録日</th>
+            <th>ユーザー情報編集</th>
+            <th>ユーザー削除</th>
+        </tr>
+    {% for item in data %}
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.userName}}</td>
+            <td>{{item.mail}}</td>
+            <td>{{item.entryDate}}</td>
+            <td><a href = "{% url 'ManagementApp:Edit' item.id %}">EDIT</a></td>
+            <td><a href = "{% url 'ManagementApp:Delete' item.id %}">DELEATE</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>

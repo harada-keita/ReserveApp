@@ -21,7 +21,7 @@
             </ul>
             {% endif %}
         </h1>
-        <form method="post" action="{% url 'ManagementApp:Login' %}">
+        <form method="post" action="{% url 'ReserveApp:Login' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="userName">ユーザー名</label>
@@ -39,7 +39,7 @@
                 var txt = document.getElementById("username").value;
 
                 $.ajax({
-                    url: "{% url 'ManagementApp:call_write_data' %}",
+                    url: "{% url 'ReserveApp:call_write_data' %}",
                     method: 'GET',
                     data: { "input_data": txt },
                     dataType: "text",

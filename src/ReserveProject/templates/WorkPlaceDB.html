@@ -1,0 +1,50 @@
+{% load static %}
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link href="{% static 'css/UserDBStyle.css' %}" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    <form action="{% url 'ManagementApp:WorkPlaceDB' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="検索">
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>作業場名</th>
+            <th>客先名</th>
+            <th>住所</th>
+            <th>担当者</th>
+            <th>着工日</th>
+            <th>着工予定日</th>
+            <th>完了日</th>
+            <th>完了予定日</th>
+            <th>特記事項</th>
+            <th>ユーザー情報編集</th>
+            <th>ユーザー削除</th>
+        </tr>
+    {% for item in data %}
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.placeName}}</td>
+            <td>{{item.client}}</td>
+            <td>{{item.address}}</td>
+            <td>{{item.manager}}</td>
+            <td>{{item.ConstructionStartDate}}</td>
+            <td>{{item.ConstructionStartSchedule}}</td>
+            <td>{{item.ConstructionEndDate}}</td>
+            <td>{{item.ConstructionEndSchedule}}</td>
+            <td>{{item.Notes}}</td>
+            <!-- <td><a href = "{% url 'ManagementApp:Edit' item.id %}">EDIT</a></td>
+            <td><a href = "{% url 'ManagementApp:Delete' item.id %}">DELEATE</a></td> -->
+        </tr>
+    {% endfor %}
+    </table>
+</body>

@@ -1,0 +1,116 @@
+body {
+    overflow: hidden;
+    background: linear-gradient(to right, #8b7ac8b9, #0abfbc);
+}
+
+/* h1(タイトル) */
+h1 {
+    text-align: center;
+    position: relative;
+    padding: 0.25em 1em;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
+}
+
+h1:before,
+h1:after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    width: 2px;
+    height: -webkit-calc(100% + 14px);
+    height: calc(100% + 14px);
+    background-color: black;
+}
+
+h1:before {
+    left: 7px;
+}
+
+h1:after {
+    right: 7px;
+}
+
+/* セレクトボックス */
+select {
+    font-size: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 2em auto;
+    border: 2px solid #da3c41;
+    border-radius: 50px;
+    background: #da3c41a8;
+    width: 400px;
+    height: 50px;
+}
+
+
+/* 業務詳細画面ボタン */
+.toDetail {
+    text-align: center;
+    width: 30%;
+    padding: 15px;
+    background-color: rgba(249, 180, 107, 0.8);
+    border: none;
+    border-radius: 5px;
+    color: #f2eee9;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+h3{
+    text-align: right;
+}
+
+.toLogout {
+    font-size: 16px;
+}
+
+
+/* 以下メニュバー */
+.cp_navi03 ul.sidenav {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: #f1f1f1;
+    list-style-type: none;
+}
+
+.cp_navi03 ul.sidenav li a {
+    display: block;
+    color: #000000;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.cp_navi03 ul.sidenav li a.active {
+    background: #da3c41;
+    color: #ffffff;
+}
+
+/*.active以外のhoverの動き*/
+.cp_navi03 ul.sidenav li a:hover:not(.active) {
+    background-color: #1b2538;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 900px) {
+    .cp_navi03 ul.sidenav {
+        flex-direction: row;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cp_navi03 ul.sidenav {
+        flex-direction: column;
+        text-align: center;
+    }
+}

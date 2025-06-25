@@ -1,0 +1,26 @@
+{% load static %}
+<html lang="ja">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link href="{% static 'css/UserDBStyle.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1>{{title}}</h1>
+    <p>※以下のレコードを削除します</p>
+    <table>
+        <tr><th>ID</th><td>{{obj.id}}</td></tr>
+        <tr><th>氏名</th><td>{{obj.userName}}</td></tr>
+        <tr><th>血液型</th><td>{{obj.blood}}</td></tr>
+        <tr><th>メールアドレス</th><td>{{obj.mail}}</td></tr>
+        <tr><th>登録日</th><td>{{obj.entryDate}}</td></tr>
+        <form action="{% url 'ManagementApp:Delete'}" method="post">
+            {% csrf_token %}
+            <tr><th></th><td>
+                <input type="submit" value="click">
+            </td></tr>
+        </form>
+    </table>
+</body>

@@ -1,0 +1,47 @@
+{% load static %}
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link href="{% static 'css/MainMenuStyle.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <h1>
+        {{title}}
+    </h1>
+
+    <h2>
+        <div align="center">
+            <select name="example" width="100px">
+                <option value="example1">業務1</option>
+                <option value="example2">業務2</option>
+                <option value="example3">業務3</option>
+            </select>
+        </div>
+    </h2>
+
+    <h2>
+        <div align="center">
+            <button class="toDetail" type="submit" >業務詳細画面へ</button>
+        </div>
+    </h2>
+
+
+    <div class="cp_navi03">
+        <ul class="sidenav">
+
+            <li><a href="{% url 'ReserveApp:Logout' %}">ログアウト</a></li>
+        </ul>
+    </div>
+
+    <h3>
+        <!--今回遷移先のurlを<form>で書いていたため、ボタンの種類が「submit」でないと起動しない（おそらく）-->
+        <form action="{% url 'ReserveApp:Logout' %}" method="get">
+            <button class="toLogout" type="submit">ログアウト</button>
+        </form>
+    </h3>
+</body>
+
+</html>

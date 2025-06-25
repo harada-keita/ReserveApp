@@ -1,0 +1,8 @@
+body {
+    overflow: hidden;
+    background: linear-gradient(to right, #7ac87eb9, #0abfbc);
+}
+
+h1 {
+    text-align: center;
+}
