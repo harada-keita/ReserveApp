@@ -8,11 +8,11 @@ h1 {
     text-align: center;
     position: relative;
     padding: 0.25em 1em;
-    border-top: solid 2px black;
+    border-top: solid 20px black;
     border-bottom: solid 2px black;
 }
 
-h1:before,
+
 h1:after {
     content: '';
     position: absolute;
@@ -62,7 +62,23 @@ select {
 }
 
 h3{
-    text-align: right;
+    text-align: center;
+}
+
+a{
+    align-content: center;
+}
+
+.container{
+    height: 200px;
+    display: grid;
+    justify-content: center;
+}
+
+.item{
+    width: 10em;
+    border-top: solid 20px black;
+    border-bottom: solid 2px black;
 }
 
 .toLogout {
@@ -70,47 +86,3 @@ h3{
 }
 
 
-/* 以下メニュバー */
-.cp_navi03 ul.sidenav {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 1000px;
-    margin: 0;
-    padding: 0;
-    background: #f1f1f1;
-    list-style-type: none;
-}
-
-.cp_navi03 ul.sidenav li a {
-    display: block;
-    color: #000000;
-    padding: 15px;
-    text-decoration: none;
-}
-
-.cp_navi03 ul.sidenav li a.active {
-    background: #da3c41;
-    color: #ffffff;
-}
-
-/*.active以外のhoverの動き*/
-.cp_navi03 ul.sidenav li a:hover:not(.active) {
-    background-color: #1b2538;
-    color: #ffffff;
-}
-
-@media screen and (max-width: 900px) {
-    .cp_navi03 ul.sidenav {
-        flex-direction: row;
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .cp_navi03 ul.sidenav {
-        flex-direction: column;
-        text-align: center;
-    }
-}

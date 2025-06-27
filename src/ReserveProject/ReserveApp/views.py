@@ -46,10 +46,15 @@ def Logout(request):
 
 
 def ManagerMainMenu(request):
+    if request.method == "POST":
+        selected_value = request.POST.get("example")
     params = {
         'title' : 'メインメニュー（管理者）',
-        'message' : '色んな配置検討中'
+        'message' : '色んな配置検討中',
+        'ButtonMessage': '予約画面へ'
+        
     }
+    
     return render(request, 'ManagerMainMenu.html', params)
 
 def UserMainMenu(request):
@@ -58,6 +63,13 @@ def UserMainMenu(request):
         'message' : ''
     }
     return render(request, 'UserMainMenu.html', params)
+
+def ReserveMenu(request):
+    params = {
+        'title' : '予約システム'
+    }
+
+    return render(request, 'ReserveMenu.html', params)
 
 
 # ajaxでurl指定したメソッド

@@ -11,3 +11,15 @@ class User(models.Model):
     password = models.CharField("パスワード", max_length=30, default="0000", null=False)
     entryDate = models.DateTimeField("登録日", default=timezone.now)
     masterMode = models.BooleanField("管理者", default=False)
+    
+class Place(models.Model):
+    name = models.CharField('場所名', max_length=255)
+    price = models.IntegerField('1時間当たりの値段')
+    
+class Schedule(models.Model):
+    #予約スケジュール
+    start = models.DateTimeField('開始時間')
+    end = models.DateTimeField('終了時間')
+    name = models.CharField('予約者名', max_length=255)
+    #以下のForeignKeyは他のモデルとつなげる
+    #place = models.ForeignKey(User, )

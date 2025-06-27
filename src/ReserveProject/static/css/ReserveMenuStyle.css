@@ -1,0 +1,22 @@
+h1{
+    text-align: center;
+}
+
+.container{
+    text-align: center;
+    background-color: blue;
+
+    /* align-items: center;
+    justify-content: center; */
+}
+
+.test{
+    /* text-align: center; */
+
+    width: 200px;
+    background-color:chartreuse;
+}
+
+.nav{
+    background-color: aquamarine;
+}
