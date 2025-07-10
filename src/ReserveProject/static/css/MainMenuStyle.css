@@ -1,5 +1,6 @@
 body {
-    overflow: hidden;
+    /* これをするとページがスクロールできなくなる */
+    /* overflow: hidden; */
     background: linear-gradient(to right, #8b7ac8b9, #0abfbc);
 }
 
@@ -8,7 +9,7 @@ h1 {
     text-align: center;
     position: relative;
     padding: 0.25em 1em;
-    border-top: solid 20px black;
+    border-top: solid 2px black;
     border-bottom: solid 2px black;
 }
 

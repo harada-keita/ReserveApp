@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>カレンダー</title>
+
+    <link href="{% static 'css/calendarStyle.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1>
+        {{title}}
+    </h1>
+    <h2>
+        {{week_dates.0}} ～ {{week_dates.6}}
+    </h2>
+
+    <div>
+        <a href="?week={{prev_week}}">← 前週</a>
+        <a href="?week={{next_week}}">次週 →</a>
+    </div>
+
+    <table border="1">
+        <tr>
+            {% for date in week_dates %}
+            <th>{{ date|date:"D" }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for date in week_dates %}
+                <td>{{ date|date:"Y-m-d" }}</td>
+            {% endfor %}
+        </tr>
+    </table>

@@ -12,9 +12,20 @@ class User(models.Model):
     entryDate = models.DateTimeField("登録日", default=timezone.now)
     masterMode = models.BooleanField("管理者", default=False)
     
+    def __str__(self):
+        if self.masterMode == True:
+            masterStr = '管理者'
+        else:
+            masterStr = '一般'
+        return self.userName + '（' + masterStr + '）'
+    
 class Place(models.Model):
     name = models.CharField('場所名', max_length=255)
     price = models.IntegerField('1時間当たりの値段')
+    user = models.ForeignKey(User, verbose_name='予約者', on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name
     
 class Schedule(models.Model):
     #予約スケジュール
@@ -22,4 +33,4 @@ class Schedule(models.Model):
     end = models.DateTimeField('終了時間')
     name = models.CharField('予約者名', max_length=255)
     #以下のForeignKeyは他のモデルとつなげる
-    #place = models.ForeignKey(User, )
+    user = models.ForeignKey(User, verbose_name='予約者', on_delete=models.CASCADE)

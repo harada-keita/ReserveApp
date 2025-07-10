@@ -33,9 +33,19 @@
 
 <!-- ブロックを作成して、それにリンクを貼る -->
 <a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
-    href="{% url 'ReserveApp:ReserveMenu' %}">
+    href="{% url 'ReserveApp:week_calendar' %}">
     <div style="color:black;font-size: 20px;font-weight: bold;">予約システム</div>
     <p style="color:black;">予約システムのメインメニューへ移行します。</p>
+</a>
+<a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
+    href="{% url 'ReserveApp:UserDB' %}">
+    <div style="color:black;font-size: 20px;font-weight: bold;">ユーザー管理</div>
+    <p style="color:black;">会員ユーザー情報のリストを表示します。</p>
+</a>
+<a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
+    href="{% url 'ReserveApp:MyReserve' %}">
+    <div style="color:black;font-size: 20px;font-weight: bold;">予約確認</div>
+    <p style="color:black;">ユーザーの予約状況が確認できます。</p>
 </a>
 <a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
     href="{% url 'ReserveApp:Logout' %}">

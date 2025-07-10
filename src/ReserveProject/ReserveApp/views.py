@@ -1,12 +1,21 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # ログイン機能
-from django.contrib.auth import authenticate, login
 from django.contrib import messages
 # application/write_data.pyをインポートする
 from .application import write_data
 # 以下モデル
-from .models import User
+from .models import User, Schedule
+from .forms import UserDBForm, UserForm
+#以下カレンダー
+import calendar
+import jpholiday
+import datetime
+from django.conf import settings
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from django.views import generic
 # Create your views here.
 def Login(request):
     params = {
@@ -20,6 +29,7 @@ def Login(request):
         username = request.POST.get('userName')
         password = request.POST.get('password')
 
+        
         # ユーザー名がデータベースにない場合の例外処理
         try:
             # ログイン画面で入力したユーザー名の情報(Userクラスの変数)を取得
@@ -27,8 +37,12 @@ def Login(request):
             if (item.userName == username):
                 if (item.password == password):
                     if (item.masterMode):
+                        # ユーザー名を他のページで使用するため
+                        request.session['username'] = username
                         return redirect('ReserveApp:ManagerMainMenu')
                     else:
+                        # ユーザー名を他のページで使用するため
+                        request.session['username'] = username
                         return redirect('ReserveApp:UserMainMenu')
                 else:
                     messages.error(request, 'パスワードが間違っています。')
@@ -46,11 +60,14 @@ def Logout(request):
 
 
 def ManagerMainMenu(request):
-    if request.method == "POST":
-        selected_value = request.POST.get("example")
+    #ログインページからユーザー名を取得
+    username = request.session.get('username')
+
+    # if request.method == "POST":
+    #     selected_value = request.POST.get("example")
     params = {
         'title' : 'メインメニュー（管理者）',
-        'message' : '色んな配置検討中',
+        'message' : username,
         'ButtonMessage': '予約画面へ'
         
     }
@@ -71,6 +88,47 @@ def ReserveMenu(request):
 
     return render(request, 'ReserveMenu.html', params)
 
+def UserDB(request):
+    params = {
+        'title' : 'ユーザー情報',
+        'message' : 'all Persons',
+        'form' : UserDBForm(),
+        'data' : []
+    }
+    if (request.method == 'POST'):
+        name = request.POST['userName']
+        # get内の引数の「userName」の所はUserクラスの変数名じゃないとだめ
+        item = User.objects.get(userName=name)
+        params['data'] = [item]
+        params['form'] = UserForm(request.POST)
+    else:
+        params['data'] = User.objects.all()
+    return render(request, 'UserDB.html', params)
+
+def UserEdit(request, num):
+    obj = User.objects.get(id=num)
+    if (request.method == 'POST'):
+        user = UserForm(request.POST, instance=obj)
+        user.save()
+        return redirect('ReserveApp:UserDB')
+    params={
+        'title' : 'ユーザー編集画面',
+        'id' : num,
+        'form' : UserForm(instance=obj)#ここの書き方はforms.pyで定義したFormがModelFormを継承した場合に使用可能。
+    }
+    return render(request, 'UserEdit.html', params)
+
+def UserDelete(request, num):
+    user = User.objects.get(id=num)
+    if (request.method == 'POST'):
+        user.delete()
+        return redirect('ReserveApp:UserDB')
+    params={
+        'title' : 'ユーザー削除',
+        'id' : num,
+        'obj' : user,
+    }
+    return render(request, 'UserDelete.html', params)
 
 # ajaxでurl指定したメソッド
 def call_write_data(req):
@@ -79,3 +137,55 @@ def call_write_data(req):
         # ajaxで送信したデータのうち"input_data"を指定して取得する。
         write_data.write_csv(req.GET.get("input_data"))
         return HttpResponse()
+    
+
+    
+def week_calendar(request, year=None, month=None, day=None):
+    place = '会議室１'
+    if year and month and day:
+        date_str = f"{year}年{month}月{day}日"
+        today = datetime.datetime.strptime(date_str, "%Y年%m月%d日")
+    else:
+        today = datetime.datetime.now()
+    start_week = today - datetime.timedelta(days=today.weekday())
+    dates = [start_week + datetime.timedelta(days=i) for i in range(7)]
+    next_week = start_week + datetime.timedelta(days=7)
+    prev_week = start_week - datetime.timedelta(days=7)
+
+    result9 = []
+    for i in range(7):
+        previous = '〇'
+        result9.append(previous)
+
+    context = {
+        'title' : "予約画面",
+        'message' : place,
+        'dates': dates,
+        'today': today,
+        'next_week_year': next_week.year,
+        'next_week_month': next_week.month,
+        'next_week_day': next_week.day,
+        'prev_week_year': prev_week.year,
+        'prev_week_month': prev_week.month,
+        'prev_week_day': prev_week.day,
+        'time9' : result9,
+
+    }
+    return render(request, 'calendar.html', context)
+
+def EntryTime(request):
+    param = {
+        'title' : "登録画面",
+        'message' : "この時間で登録しますか"
+    }
+    return render(request, 'EntryTime.html', param)
+
+def MyReserve(request):
+    # ログインページからユーザー名を取得
+    username = request.session.get('username')
+    #ログインしたユーザーの予約情報を取得
+    user_info = User.objects.get(userName=username)
+    param = {
+        'title' : f"{username}さんの予約状況"
+    }
+    return render(request, 'MyReserve.html', param)

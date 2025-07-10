@@ -1,0 +1,10 @@
+table { border-collapse: collapse; width: 100%; }
+td, th { border: 1px solid #ccc; padding: 8px; text-align: center; height: 80px; font-size: 100%; }
+
+.sat{
+    color: blue;
+}
+
+.sun{
+    color: red;
+}

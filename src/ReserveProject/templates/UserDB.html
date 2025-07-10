@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1>{{title}}</h1>
-    <form action="{% url 'ManagementApp:UserDB' %}" method="post">
+    <form action="{% url 'ReserveApp:UserDB' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="検索">
@@ -30,8 +30,8 @@
             <td>{{item.userName}}</td>
             <td>{{item.mail}}</td>
             <td>{{item.entryDate}}</td>
-            <td><a href = "{% url 'ManagementApp:Edit' item.id %}">EDIT</a></td>
-            <td><a href = "{% url 'ManagementApp:Delete' item.id %}">DELEATE</a></td>
+            <td><a href = "{% url 'ReserveApp:Edit' item.id %}">EDIT</a></td>
+            <td><a href = "{% url 'ReserveApp:Delete' item.id %}">DELEATE</a></td>
         </tr>
     {% endfor %}
     </table>
