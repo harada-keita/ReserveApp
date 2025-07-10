@@ -34,15 +34,20 @@ def Login(request):
         try:
             # ログイン画面で入力したユーザー名の情報(Userクラスの変数)を取得
             item = User.objects.get(userName=username)
+            userID = item.id
             if (item.userName == username):
                 if (item.password == password):
                     if (item.masterMode):
                         # ユーザー名を他のページで使用するため
                         request.session['username'] = username
+                        #予約マイページを表示するため、Userのidを取得できるようにする（ユーザー名ではモデル情報を取得できなかった）
+                        request.session['userID'] = userID
                         return redirect('ReserveApp:ManagerMainMenu')
                     else:
                         # ユーザー名を他のページで使用するため
                         request.session['username'] = username
+                        #予約マイページを表示するため、Userのidを取得できるようにする（ユーザー名ではモデル情報を取得できなかった）
+                        request.session['userID'] = userID
                         return redirect('ReserveApp:UserMainMenu')
                 else:
                     messages.error(request, 'パスワードが間違っています。')
@@ -181,11 +186,17 @@ def EntryTime(request):
     return render(request, 'EntryTime.html', param)
 
 def MyReserve(request):
-    # ログインページからユーザー名を取得
+        # ログインページからユーザー名を取得
     username = request.session.get('username')
-    #ログインしたユーザーの予約情報を取得
-    user_info = User.objects.get(userName=username)
-    param = {
-        'title' : f"{username}さんの予約状況"
+    #ユーザー情報を取得するためにIDを取得
+    userID = request.session.get('userID')
+    params = {
+        'title' : f"{username}さんの予約状況",
+        'data' : []
     }
-    return render(request, 'MyReserve.html', param)
+
+    #ログインしたユーザーの予約情報を取得(以下のgetは一件だけ取得できるらしい←同一ユーザーの登録が２件以上ある場合エラー発生⇒getではなくfilter)
+    item = Schedule.objects.filter(user=userID)
+    params['data'] = item#ここのitemに配列の[]をつけてしまうと二次元配列（余計な次元となってしまうため、なしで）
+
+    return render(request, 'MyReserve.html', params)

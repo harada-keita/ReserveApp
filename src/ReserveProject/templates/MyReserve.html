@@ -4,11 +4,25 @@
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
-    <link href="{% static 'css/MainMenuStyle.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/MyReserveStyle.css' %}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
     <h1>
         {{title}}
     </h1>
+    <table>
+        <tr>
+            <th>場所</th>
+            <th>開始時間</th>
+            <th>終了時間</th>
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{item.place}}</td>
+            <td>{{item.start|date:"Y年m月d日 H:i"}}</td>
+            <td>{{item.end}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
