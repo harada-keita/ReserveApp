@@ -15,7 +15,8 @@
     <h2>
         <div align="center">
             {{message}}
-            <form method="POST" action="{% url 'ReserveApp:ManagerMainMenu' %}">
+            <form method="POST">
+                {% csrf_token %}
                 <select name="example" width="100px">
                     <option value="example1">部屋予約</option>
                     <option value="example2">メニュー2</option>

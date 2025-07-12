@@ -1,7 +1,9 @@
-
-<html>
+{% load static %}
+<html lang="ja">
 <head>
+    <meta charset="utf-8">
     <title>{{title}}</title>
+    <link href="{% static 'css/calendarStyle.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <h1>{{message}}</h1>
@@ -19,37 +21,155 @@
         </tr>
         <tr>
             <th >9:00～10:00</th>
-            {% for result in time9 %}
-            <th>
+            {% for result in 9time %}
+            {% if result == "〇" %}
+            <th class="blue">
                 <a href="{% url 'ReserveApp:EntryTime' %}">
                 {{result}}
                 </a>
             </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
             {% endfor %}
             <th >9:00～10:00</th>
         </tr>
         <tr>
             <th >10:00～11:00</th>
+            {% for result in 10time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
+            <th >10:00～11:00</th>
         </tr>
         <tr>
+            <th >11:00～12:00</th>
+            {% for result in 11time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
             <th >11:00～12:00</th>
         </tr>
         <tr>
             <th >12:00～13:00</th>
+            {% for result in 12time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
+            <th >12:00～13:00</th>
         </tr>
         <tr>
+            <th >13:00～14:00</th>
+            {% for result in 13time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
             <th >13:00～14:00</th>
         </tr>
         <tr>
             <th >14:00～15:00</th>
+            {% for result in 14time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
+            <th >14:00～15:00</th>
         </tr>
         <tr>
+            <th >15:00～16:00</th>
+            {% for result in 15time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
             <th >15:00～16:00</th>
         </tr>
         <tr>
             <th >16:00～17:00</th>
+            {% for result in 16time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
+            <th >16:00～17:00</th>
         </tr>
         <tr>
+            <th >17:00～18:00</th>
+            {% for result in 17time %}
+            {% if result == "〇" %}
+            <th class="blue">
+                <a href="{% url 'ReserveApp:EntryTime' %}">
+                {{result}}
+                </a>
+            </th>
+            {% else %}
+            <th class="red">
+                {{result}}
+            </th>
+            {% endif %}
+            {% endfor %}
             <th >17:00～18:00</th>
         </tr>
     </table>

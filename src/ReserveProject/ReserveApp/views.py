@@ -147,21 +147,74 @@ def call_write_data(req):
     
 def week_calendar(request, year=None, month=None, day=None):
     place = '会議室１'
+    nine_time_result = []
+    ten_time_result = []
+    eleven_time_result = []
+    twelve_time_result = []
+    thirteen_time_result = []
+    fourteen_time_result = []
+    fifteen_time_result = []
+    sixteen_time_result = []
+    seventeen_time_result = []
+    
+    #とりあえず表内を〇で埋める処理をしてから、条件分岐で×に変換
+    for i in range(7):
+        previous = '〇'
+        nine_time_result.append(previous)
+        ten_time_result.append(previous)
+        eleven_time_result.append(previous)
+        twelve_time_result.append(previous)
+        thirteen_time_result.append(previous)
+        fourteen_time_result.append(previous)
+        fifteen_time_result.append(previous)
+        sixteen_time_result.append(previous)
+        seventeen_time_result.append(previous)
+    
+    #表の日付のstr
     if year and month and day:
         date_str = f"{year}年{month}月{day}日"
         today = datetime.datetime.strptime(date_str, "%Y年%m月%d日")
     else:
         today = datetime.datetime.now()
+    #次週、前週の場合の切り替え
     start_week = today - datetime.timedelta(days=today.weekday())
     dates = [start_week + datetime.timedelta(days=i) for i in range(7)]
     next_week = start_week + datetime.timedelta(days=7)
     prev_week = start_week - datetime.timedelta(days=7)
 
-    result9 = []
-    for i in range(7):
-        previous = '〇'
-        result9.append(previous)
+    reserved_data = []
+    reserved_data = Schedule.objects.all()
+    #print(reserved_data)
+    for index, date in enumerate(dates):#こっち(date)は表示する日付
+        #print(date.date())
+        for i in reserved_data:#こっち(i)が予約されているデータ
+            #print(i.start.date())
+            #日付が一致した場合
+            if i.start.date() == date.date():
+                print(i.start.hour)
+                #予約のスタート時間が9の場合9:00～10:00を×
+                if i.start.hour == 9:
+                    nine_time_result[index] = '×'
+                elif i.start.hour == 10:
+                    ten_time_result[index] = '×'
+                elif i.start.hour == 11:
+                    eleven_time_result[index] = '×'
+                elif i.start.hour == 12:
+                    twelve_time_result[index] = '×'
+                elif i.start.hour == 13:
+                    thirteen_time_result[index] = '×'
+                elif i.start.hour == 14:
+                    fourteen_time_result[index] = '×'
+                elif i.start.hour == 15:
+                    fifteen_time_result[index] = '×'
+                elif i.start.hour == 16:
+                    sixteen_time_result[index] = '×'
+                elif i.start.hour == 17:
+                    seventeen_time_result[index] = '×'
 
+        
+
+    
     context = {
         'title' : "予約画面",
         'message' : place,
@@ -173,7 +226,15 @@ def week_calendar(request, year=None, month=None, day=None):
         'prev_week_year': prev_week.year,
         'prev_week_month': prev_week.month,
         'prev_week_day': prev_week.day,
-        'time9' : result9,
+        '9time' : nine_time_result,
+        '10time' : ten_time_result,
+        '11time' : eleven_time_result,
+        '12time' : twelve_time_result,
+        '13time' : thirteen_time_result,
+        '14time' : fourteen_time_result,
+        '15time' : fifteen_time_result,
+        '16time' : sixteen_time_result,
+        '17time' : seventeen_time_result
 
     }
     return render(request, 'calendar.html', context)
@@ -200,3 +261,9 @@ def MyReserve(request):
     params['data'] = item#ここのitemに配列の[]をつけてしまうと二次元配列（余計な次元となってしまうため、なしで）
 
     return render(request, 'MyReserve.html', params)
+
+def ReserveDelete(request):
+    params = {
+        'title' : 'この時間の予約を削除しますか'
+    }
+    return render(request, 'ReserveDelete.html', params)

@@ -16,12 +16,14 @@
             <th>場所</th>
             <th>開始時間</th>
             <th>終了時間</th>
+            <th></th>
         </tr>
         {% for item in data %}
         <tr>
             <td>{{item.place}}</td>
             <td>{{item.start|date:"Y年m月d日 H:i"}}</td>
-            <td>{{item.end}}</td>
+            <td>{{item.end|date:"Y年m月d日 H:i"}}</td>
+            <td><a href = "{% url 'ReserveApp:ReserveDelete' %}">DELEATE</a></td>
         </tr>
         {% endfor %}
     </table>

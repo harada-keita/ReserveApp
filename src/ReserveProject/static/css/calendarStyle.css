@@ -8,3 +8,11 @@ td, th { border: 1px solid #ccc; padding: 8px; text-align: center; height: 80px;
 .sun{
     color: red;
 }
+
+.blue{
+    background-color: aqua;
+}
+
+.red{
+    background-color: hotpink;
+}
