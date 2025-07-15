@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{message}}</h1>
+
+    <h2>{{date}}</h2>
+    <h2>{{time}}</h2>
+    <form action="{% url 'ReserveApp:ReserveDisplay' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" name="reserve_button" value="登録">
+    </form>
+</body>

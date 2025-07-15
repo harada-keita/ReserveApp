@@ -5,7 +5,7 @@ from django.contrib import messages
 # application/write_data.pyをインポートする
 from .application import write_data
 # 以下モデル
-from .models import User, Schedule
+from .models import User, Schedule, Place
 from .forms import UserDBForm, UserForm
 #以下カレンダー
 import calendar
@@ -212,8 +212,6 @@ def week_calendar(request, year=None, month=None, day=None):
                 elif i.start.hour == 17:
                     seventeen_time_result[index] = '×'
 
-        
-
     
     context = {
         'title' : "予約画面",
@@ -239,12 +237,43 @@ def week_calendar(request, year=None, month=None, day=None):
     }
     return render(request, 'calendar.html', context)
 
-def EntryTime(request):
-    param = {
-        'title' : "登録画面",
-        'message' : "この時間で登録しますか"
+def ReserveDisplay(request):
+
+    if (request.method == 'POST'):
+        date = request.session.get("day")
+        print(date)
+        date_str = date.split(" ")[0] #datetime型に変換するために文字列内から必要な文字のみを取得
+        time = request.session.get("time")
+        start_time = time.split("～")[0] # 9:00～10:00の場合、9:00の部分を取得
+        print(date)
+        combine_datetime = date_str + " " + start_time #年月日 時:分
+        
+        reserve_start_datetime = datetime.datetime.strptime(combine_datetime, "%Y-%m-%d %H:%M")
+        reserve_end_datetime = reserve_start_datetime + datetime.timedelta(hours=1)
+        #ユーザーモデルを取得するためのユーザー名のstrを取得
+        user_name = request.session.get('username')
+        #ユーザーモデル情報を取得
+        reserve_user = User.objects.get(userName=user_name)
+        #場所はとりあえずベタ打ちで登録(ユーザーと同様)
+        place_name = '会議室A'
+        reserve_place = Place.objects.get(name=place_name)
+        Schedule.objects.create(user=reserve_user, place=reserve_place, start=reserve_start_datetime, end=reserve_end_datetime)
+        return redirect('ReserveApp:week_calendar')
+    
+    time = request.GET.get("time")
+    #本ページ内でボタンを押すと上記（2回目）ではデータはNONEになってします⇒request.sessionで保管する
+    request.session['time'] = time
+    date = request.GET.get("day")
+    request.session['day'] = date
+    params = {
+        'title': '予約画面',
+        'message' : '以下の時間帯で予約しますか',
+        'date' : date,
+        'time' : time
     }
-    return render(request, 'EntryTime.html', param)
+    return render(request, 'ReserveDisplay.html', params)
+
+
 
 def MyReserve(request):
         # ログインページからユーザー名を取得
