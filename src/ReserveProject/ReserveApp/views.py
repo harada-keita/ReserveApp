@@ -286,7 +286,7 @@ def MyReserve(request):
     }
 
     #ログインしたユーザーの予約情報を取得(以下のgetは一件だけ取得できるらしい←同一ユーザーの登録が２件以上ある場合エラー発生⇒getではなくfilter)
-    item = Schedule.objects.filter(user=userID)
+    item = Schedule.objects.filter(user=userID).order_by('start')
     params['data'] = item#ここのitemに配列の[]をつけてしまうと二次元配列（余計な次元となってしまうため、なしで）
 
     return render(request, 'MyReserve.html', params)
