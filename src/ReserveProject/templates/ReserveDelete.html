@@ -6,3 +6,20 @@
     <title>{{title}}</title>
     <link href="{% static 'css/MyReserveStyle.css' %}" rel="stylesheet" type="text/css">
 </head>
+<body>
+    <h1>{{title}}</h1>
+    <p>※以下のレコードを削除します</p>
+    <table>
+        <tr><th>ID</th><td>{{obj.id}}</td></tr>
+        <tr><th>氏名</th><td>{{obj.user}}</td></tr>
+        <tr><th>場所</th><td>{{obj.place}}</td></tr>
+        <tr><th>開始時間</th><td>{{obj.start}}</td></tr>
+        <tr><th>終了時間</th><td>{{obj.end}}</td></tr>
+        <form action="{% url 'ReserveApp:ReserveDelete' obj.id %}" method="post">
+            {% csrf_token %}
+            <tr><th></th><td>
+                <input type="submit" value="click">
+            </td></tr>
+        </form>
+    </table>
+</body>

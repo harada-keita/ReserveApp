@@ -291,8 +291,15 @@ def MyReserve(request):
 
     return render(request, 'MyReserve.html', params)
 
-def ReserveDelete(request):
+def ReserveDelete(request, num):
+    username = request.session.get('username')
+    user = User.objects.get(userName=username)
+    schedule = Schedule.objects.get(id=num, user=user)
+    if (request.method == 'POST'):
+        schedule.delete()
+        return redirect('ReserveApp:MyReserve')
     params = {
-        'title' : 'この時間の予約を削除しますか'
+        'title' : 'この時間の予約を削除しますか',
+        'obj' : schedule
     }
     return render(request, 'ReserveDelete.html', params)

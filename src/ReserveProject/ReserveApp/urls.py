@@ -14,5 +14,5 @@ urlpatterns = [path('login/', views.Login,  name="Login"),
                 path('calendar/', views.week_calendar, name='week_calendar'),
                 path('calendar/<int:year>/<int:month>/<int:day>/', views.week_calendar, name='week_calendar_specific'),
                 path('MyReserve/', views.MyReserve, name="MyReserve"),
-                path('ReserveDelete/', views.ReserveDelete, name='ReserveDelete'),
+                path('ReserveDelete/<int:num>', views.ReserveDelete, name='ReserveDelete'),
                 path('Reserve/', views.ReserveDisplay, name='ReserveDisplay')]
