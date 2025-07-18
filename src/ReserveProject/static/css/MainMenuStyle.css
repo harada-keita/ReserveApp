@@ -13,7 +13,7 @@ h1 {
     border-bottom: solid 2px black;
 }
 
-
+h1:before,
 h1:after {
     content: '';
     position: absolute;
@@ -52,7 +52,7 @@ select {
     text-align: center;
     width: 30%;
     padding: 15px;
-    background-color: rgba(249, 180, 107, 0.8);
+    background-color: rgba(112, 249, 107, 0.8);
     border: none;
     border-radius: 5px;
     color: #f2eee9;
@@ -62,28 +62,38 @@ select {
     transition: background-color 0.3s ease;
 }
 
-h3{
-    text-align: center;
-}
-
-a{
-    align-content: center;
-}
-
-.container{
-    height: 200px;
-    display: grid;
-    justify-content: center;
-}
-
-.item{
-    width: 10em;
-    border-top: solid 20px black;
-    border-bottom: solid 2px black;
-}
 
 .toLogout {
     font-size: 16px;
 }
 
+table, tr, td{
+    text-align: center;
+    background-color:mintcream;
+}
 
+.radius-table{
+    border-radius: 10px;
+    border-spacing: 0;
+    border: none;
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+}
+.radius-table tr>*{
+    padding: 5px 10px;
+    border: none;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+}
+.radius-table tr:first-child>*:first-child{
+    border-radius: 10px 0 0 0;
+}
+.radius-table tr:first-child>*:last-child{
+    border-radius: 0 10px 0 0;
+}
+.radius-table tr:last-child>*:first-child{
+    border-radius: 0 0 0 10px;
+}
+.radius-table tr:last-child>*:last-child{
+    border-radius: 0 0 10px 0;
+}

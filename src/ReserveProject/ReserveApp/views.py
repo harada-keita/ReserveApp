@@ -6,16 +6,12 @@ from django.contrib import messages
 from .application import write_data
 # 以下モデル
 from .models import User, Schedule, Place
-from .forms import UserDBForm, UserForm
+from .forms import UserDBForm, UserForm, UserCreateForm
 #以下カレンダー
-import calendar
-import jpholiday
+
 import datetime
-from django.conf import settings
-from django.db.models import Q
-from django.shortcuts import get_object_or_404
-from django.utils import timezone
-from django.views import generic
+
+
 # Create your views here.
 def Login(request):
     params = {
@@ -72,7 +68,7 @@ def ManagerMainMenu(request):
     #     selected_value = request.POST.get("example")
     params = {
         'title' : 'メインメニュー（管理者）',
-        'message' : username,
+        'message' : f'{username}さんのページ',
         'ButtonMessage': '予約画面へ'
         
     }
@@ -109,6 +105,21 @@ def UserDB(request):
     else:
         params['data'] = User.objects.all()
     return render(request, 'UserDB.html', params)
+
+def UserCreate(request):
+    params = {
+        'title' : 'ユーザー登録',
+        'message' : 'your data:',
+        'form' : UserCreateForm()
+    }
+    if (request.method == 'POST'):
+        params['title'] = '登録しました。'
+        obj = User()
+        user = UserCreateForm(request.POST, instance=obj)
+        user.save()
+    return render(request, 'UserCreate.html', params)
+    
+
 
 def UserEdit(request, num):
     obj = User.objects.get(id=num)

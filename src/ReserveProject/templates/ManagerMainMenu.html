@@ -32,31 +32,36 @@
         </div>
     </h2>
 
-<!-- ブロックを作成して、それにリンクを貼る -->
-<a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
-    href="{% url 'ReserveApp:week_calendar' %}">
-    <div style="color:black;font-size: 20px;font-weight: bold;">予約システム</div>
-    <p style="color:black;">予約システムのメインメニューへ移行します。</p>
-</a>
-<a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
-    href="{% url 'ReserveApp:UserDB' %}">
-    <div style="color:black;font-size: 20px;font-weight: bold;">ユーザー管理</div>
-    <p style="color:black;">会員ユーザー情報のリストを表示します。</p>
-</a>
-<a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
-    href="{% url 'ReserveApp:MyReserve' %}">
-    <div style="color:black;font-size: 20px;font-weight: bold;">予約確認</div>
-    <p style="color:black;">ユーザーの予約状況が確認できます。</p>
-</a>
-<a style="padding: 5px; margin-bottom: 5px; border: 1px solid #333333; border-radius: 10px;width:500px;max-width:90%;min-height: 140px;display: block;text-decoration:none;"
-    href="{% url 'ReserveApp:Logout' %}">
-    <div style="color:black;font-size: 20px;font-weight: bold;">ログアウト</div>
-    <p style="color:black;">ログアウトすると自動でログイン画面へ戻ります。</p>
-</a>
-
-<div class="container">
-    <div class="item">テスト</div>
-</div>
+    <table align="center" border="1" class="radius-table">
+        <tr>
+            <td>
+                <a href="{% url 'ReserveApp:week_calendar' %}">
+                    <h2>予約カレンダー</h2>
+                    <p>予約はこちらから</p>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'ReserveApp:UserDB' %}">
+                    <h2>ユーザー管理</h2>
+                    <p>会員ユーザー情報のリストを表示します。</p>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="{% url 'ReserveApp:MyReserve' %}">
+                    <h2>予約確認</h2>
+                    <p>ユーザーの予約状況が確認できます。</p>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'ReserveApp:UserCreate' %}">
+                    <h2>ユーザー追加</h2>
+                    <p>ユーザーを追加します。</p>
+                </a>
+            </td>
+        </tr>
+    </table>
 
     <h3>
         <!--今回遷移先のurlを<form>で書いていたため、ボタンの種類が「submit」でないと起動しない（おそらく）-->
