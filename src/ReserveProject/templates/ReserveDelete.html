@@ -18,8 +18,12 @@
         <form action="{% url 'ReserveApp:ReserveDelete' obj.id %}" method="post">
             {% csrf_token %}
             <tr><th></th><td>
-                <input type="submit" value="click">
+                <input type="submit" value="削除する">
             </td></tr>
         </form>
     </table>
+
+    <h2>
+        <a href="{% url 'ReserveApp:ManagerMainMenu' %}">マイページ</a>
+    </h2>
 </body>
