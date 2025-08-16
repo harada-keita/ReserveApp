@@ -1,0 +1,15 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+}
+
+.address {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+}

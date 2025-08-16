@@ -332,3 +332,6 @@ def MyPage(request):
 
 def PriceList(request):
     return render(request, 'PriceList.html')
+
+def Access(request):
+    return render(request, 'Access.html')

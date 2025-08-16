@@ -77,7 +77,8 @@ body {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   flex: 1;
-  min-width: 200px;
+  min-width: 300px;
+  max-width: 400px;
 }
 
 .card h3 {
@@ -139,18 +140,18 @@ body {
 }
 
 .calendar-icon {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 }
 
 .money-icon {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 }
 
 .access-icon {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 100px;
 }
 
 .page-header {
@@ -164,6 +165,7 @@ body {
   border: 2px solid #ccc; /* 薄いグレーの枠線 */
   border-radius: 8px;     /* 角を少し丸める（任意） */
   padding: 4px;           /* 枠線と画像の間に余白 */
+  margin-bottom: 20px;
 
 }
 

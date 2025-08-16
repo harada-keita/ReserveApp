@@ -18,4 +18,5 @@ urlpatterns = [path('login/', views.Login,  name="Login"),
                 path('ReserveDelete/<int:num>', views.ReserveDelete, name='ReserveDelete'),
                 path('Reserve/', views.ReserveDisplay, name='ReserveDisplay'),
                 path('MyPage/', views.MyPage, name="MyPage"),
-                path('PriceList/', views.PriceList, name="PriceList")]
+                path('PriceList/', views.PriceList, name="PriceList"),
+                path('Access/', views.Access, name='Access')]

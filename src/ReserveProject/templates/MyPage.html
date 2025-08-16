@@ -34,16 +34,17 @@
         <div class="cards">
           <a href="{% url 'ReserveApp:PriceList' %}">
             <div class="card">
-
               <h3>料金システム</h3>
               <p>1時間当たり500円（参考）</p>
               <img src="{% static 'images/料金.png'%}" class="money-icon">
             </div>
           </a>
           <div class="card">
-            <h3>アクセス</h3>
-            <p>予約した会議室のアクセス</p>
-            <img src="{% static 'images/access.png'%}" class="access-icon">
+            <a href="{% url 'ReserveApp:Access' %}">
+              <h3>アクセス</h3>
+              <p>予約した会議室のアクセス</p>
+              <img src="{% static 'images/access.png'%}" class="access-icon">
+            </a>
           </div>
 
           <div class="card">
