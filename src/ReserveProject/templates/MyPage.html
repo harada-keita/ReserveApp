@@ -1,0 +1,72 @@
+{% load static %}
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>マイページ</title>
+  <link rel="stylesheet" href="{% static 'css/MyPageStyle.css' %}">
+</head>
+<body>
+  <div class="container">
+
+    <aside class="sidebar">
+      
+      <h2>マイページ</h2>
+      
+      <ul>
+        <li><a href="{% url 'ReserveApp:UserDB' %}">ユーザー管理</a></li>
+        <li><a href="{% url 'ReserveApp:UserCreate' %}">ユーザー追加</a></li>
+        <li><a href="#">メッセージ</a></li>
+        <li><a href="{% url 'ReserveApp:Logout' %}">ログアウト</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <img src="{% static 'images/title.png'%}" class="logo-image">
+      <div class="profile-card">
+        <img src="{% static 'images/person.png'%}" alt="ユーザー画像" class="person-icon">
+        <h3>{{username}}</h3>
+        <p>{{mail}}</p>
+        <p></p>
+      </div>
+
+      <section class="dashboard">
+        <h2>ダッシュボード</h2>
+        <div class="cards">
+          <a href="{% url 'ReserveApp:PriceList' %}">
+            <div class="card">
+
+              <h3>料金システム</h3>
+              <p>1時間当たり500円（参考）</p>
+              <img src="{% static 'images/料金.png'%}" class="money-icon">
+            </div>
+          </a>
+          <div class="card">
+            <h3>アクセス</h3>
+            <p>予約した会議室のアクセス</p>
+            <img src="{% static 'images/access.png'%}" class="access-icon">
+          </div>
+
+          <div class="card">
+            <a href="{% url 'ReserveApp:MyReserve' %}">
+              <div class="card-content">
+                <div class="text">
+                  <h3>予約確認・変更</h3>
+                  <p></p>
+                </div>
+                <img src="{% static 'images/履歴.jpg'%}" alt="履歴アイコン" class="card-icon">
+              </div>
+            </a>
+          </div>
+
+      </section>
+
+      <section class="reservation-link">
+        <img src="{% static 'images/カレンダー.png'%}" alt="カレンダーアイコン" class="calendar-icon">
+        <h2>ご予約はこちら</h2>
+        <p>サービスの予約をご希望の方は、以下のボタンから予約ページへお進みください。</p>
+        <a href="{% url 'ReserveApp:week_calendar' %}" class="reservation-button">予約ページへ進む</a>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

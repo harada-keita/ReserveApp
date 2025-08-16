@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>料金表</title>
+    <link rel="stylesheet" href="{% static 'css/PriceListStyle.css' %}">
+</head>
+<body>
+    <div class="pricing-container">
+        <header class="pricing-header">
+            <h1>料金表</h1>
+            <p>各サービスの料金をご確認いただけます。</p>
+        </header>
+        <section class="pricing-table">
+            <div class="pricing-card">
+                <img src="{% static 'images/standard.png' %}" alt="スタンダード" class="service-icon">
+                <h2>スタンダードプラン</h2>
+                <p>基本的な機能を備えたプランです。</p>
+                <div class="price">¥3,000 / 月</div>
+            </div>
+
+            <div class="pricing-card">
+                <img src="{% static 'images/premium.png' %}" alt="プレミアム" class="service-icon">
+                <h2>プレミアムプラン</h2>
+                <p>より多くの機能とサポートが含まれます。</p>
+                <div class="price">¥5,500 / 月</div>
+            </div>
+
+            <div class="pricing-card">
+                <img src="{% static 'images/business.png' %}" alt="ビジネス" class="service-icon">
+                <h2>ビジネスプラン</h2>
+                <p>法人向けのカスタマイズ可能なプランです。</p>
+                <div class="price">¥9,800 / 月</div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

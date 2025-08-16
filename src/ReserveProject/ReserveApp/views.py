@@ -314,3 +314,21 @@ def ReserveDelete(request, num):
         'obj' : schedule
     }
     return render(request, 'ReserveDelete.html', params)
+
+def MyPage(request):
+    # ログインページからユーザー名を取得
+    username = request.session.get('username')
+    mode_str = None
+    # ユーザー名からモデル情報を取得
+    user = User.objects.get(userName=username)
+    if user.masterMode:
+        mode_str = "（管理者）"
+    mail = user.mail
+    params = {
+        'username' : f"{username}{mode_str}",
+        'mail' : f"メールアドレス : {mail}"
+    }
+    return render(request, 'MyPage.html', params)
+
+def PriceList(request):
+    return render(request, 'PriceList.html')
