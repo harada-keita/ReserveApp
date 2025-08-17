@@ -20,6 +20,15 @@
       </ul>
     </aside>
 
+    <header>
+      {% if user.is_authenticated %}
+        <span>ようこそ、{{ user.username }} さん！</span>
+        <a href="{% url 'ReserveApp:Logout' %}">ログアウト</a>
+      {% else %}
+        <a href="{% url 'ReserveApp:Login' %}">ログイン</a>
+      {% endif %}
+    </header>
+
     <main class="main-content">
       <img src="{% static 'images/title.png'%}" class="logo-image">
       <div class="profile-card">

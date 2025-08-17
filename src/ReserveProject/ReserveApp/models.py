@@ -1,27 +1,17 @@
-from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
 
 
 
-class User(models.Model):
-    userName = models.CharField("名前", max_length=30)
+class User(AbstractUser):
     BloodType = [('a', 'A'), ('b', 'B'), ('o', 'O'), ('ab', 'AB')]
     blood = models.CharField("血液型", max_length=2, choices=BloodType, default='b')
-    # EmailFieldは文字列に「@」がないとエラー
-    mail = models.EmailField("メールアドレス")
-    password = models.CharField("パスワード", max_length=30, default="0000", null=False)
-    entryDate = models.DateTimeField("登録日", default=timezone.now)
-    masterMode = models.BooleanField("管理者", default=False)
     # Userモデル内で下のScheduleモデルを引っ張ってくることができない⇒ユーザーのマイページにはスケジュールモデルの予約者情報から取得するしかない
     
     def __str__(self):
-        if self.masterMode == True:
-            masterStr = '管理者'
-        else:
-            masterStr = '一般'
-        return self.userName + '（' + masterStr + '）'
+        return self.username
     
 class Place(models.Model):
     name = models.CharField('場所名', max_length=255)

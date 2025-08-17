@@ -17,6 +17,6 @@ urlpatterns = [path('login/', views.Login,  name="Login"),
                 path('MyReserve/', views.MyReserve, name="MyReserve"),
                 path('ReserveDelete/<int:num>', views.ReserveDelete, name='ReserveDelete'),
                 path('Reserve/', views.ReserveDisplay, name='ReserveDisplay'),
-                path('MyPage/', views.MyPage, name="MyPage"),
+                path('AdminiMyPage/', views.MyPage_Admini, name="MyPage_Admini"),
                 path('PriceList/', views.PriceList, name="PriceList"),
                 path('Access/', views.Access, name='Access')]

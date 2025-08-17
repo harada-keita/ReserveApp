@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -129,3 +129,11 @@ STATICFILES_DIRS = ([os.path.join(BASE_DIR, 'static')])
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'ReserveApp.User'
+
+
+# # 以下ログイン状態の保持時間などの設定
+# SESSION_COOKIE_AGE = 10 # 10秒
+
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True # ブラウザを閉じたら保持しない

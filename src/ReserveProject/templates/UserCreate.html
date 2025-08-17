@@ -9,15 +9,11 @@
 </head>
 
 <body>
-    <h1>
-        {{title}}
-    </h1>
-    <p>
-        {{message}}
-    </p>
-    <form action="{% url 'ManagementApp:UserEntry' %}" method="post">
-        {{form}}
+    <h2 style="text-align:center;">{{ title }}</h2>
+    <form method="post">
         {% csrf_token %}
+        {{ form.as_p }}
         <button type="submit">登録</button>
     </form>
 </body>
+</html>

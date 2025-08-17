@@ -2,58 +2,64 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # ログイン機能
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
 # application/write_data.pyをインポートする
 from .application import write_data
 # 以下モデル
 from .models import User, Schedule, Place
-from .forms import UserDBForm, UserForm, UserCreateForm
+from .forms import UserDBForm, UserForm
 #以下カレンダー
-
 import datetime
 
 
 # Create your views here.
 def Login(request):
     params = {
-        'title' : 'ログイン画面',
-        'data' : [],
+        'title' : 'ログイン画面'
     }
-    
-    if (request.method == 'POST'):
-        # この２つはhtml上に記入された文字列
-        # このget内の引数もUserクラスの変数名と同じにしないといけない
-        username = request.POST.get('userName')
-        password = request.POST.get('password')
+    # if request.method == 'POST':
+    #     input_username = request.POST.get('userName')
+    #     input_password = request.POST.get('password')
 
-        
-        # ユーザー名がデータベースにない場合の例外処理
-        try:
-            # ログイン画面で入力したユーザー名の情報(Userクラスの変数)を取得
-            item = User.objects.get(userName=username)
-            userID = item.id
-            if (item.userName == username):
-                if (item.password == password):
-                    if (item.masterMode):
-                        # ユーザー名を他のページで使用するため
-                        request.session['username'] = username
-                        #予約マイページを表示するため、Userのidを取得できるようにする（ユーザー名ではモデル情報を取得できなかった）
-                        request.session['userID'] = userID
-                        return redirect('ReserveApp:ManagerMainMenu')
-                    else:
-                        # ユーザー名を他のページで使用するため
-                        request.session['username'] = username
-                        #予約マイページを表示するため、Userのidを取得できるようにする（ユーザー名ではモデル情報を取得できなかった）
-                        request.session['userID'] = userID
-                        return redirect('ReserveApp:UserMainMenu')
-                else:
-                    messages.error(request, 'パスワードが間違っています。')
-                    # return redirect('ManagementApp:UserEntry')
-            else:
-                messages.error(request, 'ユーザー名が間違っています。')
-        except:
-            messages.error(request, 'ユーザー名を入力してください。')
-            # return redirect('ManagementApp:Login')
+    #     try:
+    #         user = User.objects.get(username=input_username)
+    #     except User.DoesNotExist:
+    #         messages.error(request, 'ユーザー名が存在しません。')
+    #         return render(request, 'login.html')
+
+    #     if not check_password(input_password, user.password):
+    #         messages.error(request, 'パスワードが間違っています。')
+    #         return render(request, 'login.html')
+
+    #     # 認証成功 → セッションに保存（Django標準の login() は使えない）
+    #     request.session['user_id'] = user.id
+    #     request.session['user_name'] = user.userName
+    #     request.session['is_master'] = user.masterMode
+    #     return redirect('ReserveApp:UserMainMenu')
+    if request.method == 'POST':
+        input_username = request.POST.get('username')
+        input_password = request.POST.get('password')
+        print(input_username)
+        print(input_password)
+        user = authenticate(request=request, username=input_username, password=input_password)
+        if user is not None:
+            # 以下他のページでユーザー名などの情報を使用するためにデータ確保
+            user = User.objects.get(username=input_username)
+            request.session['user_name'] = user.username
+            # request.session['is_staff'] = user.is_staff
+            # request.session['is_superuser'] = user.is_superuser
+            login(request, user)
+            return redirect('ReserveApp:MyPage_Admini')  # ログイン後の遷移先
+        else:
+            messages.error(request, 'ユーザー名またはパスワードが間違っています')
     return render(request, 'login.html', params)
+
+
+
+
+
 
 def Logout(request):
     return render(request, 'logout.html')
@@ -97,40 +103,40 @@ def UserDB(request):
         'data' : []
     }
     if (request.method == 'POST'):
-        name = request.POST['userName']
+        name = request.POST['username']
         # get内の引数の「userName」の所はUserクラスの変数名じゃないとだめ
-        item = User.objects.get(userName=name)
+        item = User.objects.get(username=name)
         params['data'] = [item]
         params['form'] = UserForm(request.POST)
     else:
         params['data'] = User.objects.all()
     return render(request, 'UserDB.html', params)
 
+
 def UserCreate(request):
-    params = {
-        'title' : 'ユーザー登録',
-        'message' : 'your data:',
-        'form' : UserCreateForm()
-    }
-    if (request.method == 'POST'):
-        params['title'] = '登録しました。'
-        obj = User()
-        user = UserCreateForm(request.POST, instance=obj)
-        user.save()
-    return render(request, 'UserCreate.html', params)
-    
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'ユーザー登録が完了しました')
+            return redirect('ReserveApp:Login')  # 登録後ログイン画面へ
+        else:
+            messages.error(request, '入力内容に誤りがあります')
+    else:
+        form = UserForm()
+    return render(request, 'UserCreate.html', {'title': 'ユーザー登録', 'form' : form})
 
 
 def UserEdit(request, num):
     obj = User.objects.get(id=num)
     if (request.method == 'POST'):
-        user = UserForm(request.POST, instance=obj)
-        user.save()
+        # user = UserForm(request.POST, instance=obj)
+        # user.save()
         return redirect('ReserveApp:UserDB')
     params={
         'title' : 'ユーザー編集画面',
         'id' : num,
-        'form' : UserForm(instance=obj)#ここの書き方はforms.pyで定義したFormがModelFormを継承した場合に使用可能。
+        # 'form' : UserForm(instance=obj)#ここの書き方はforms.pyで定義したFormがModelFormを継承した場合に使用可能。
     }
     return render(request, 'UserEdit.html', params)
 
@@ -315,20 +321,22 @@ def ReserveDelete(request, num):
     }
     return render(request, 'ReserveDelete.html', params)
 
-def MyPage(request):
+
+@login_required(login_url='login/')
+def MyPage_Admini(request):
     # ログインページからユーザー名を取得
-    username = request.session.get('username')
+    username = request.session.get('user_name')
     mode_str = None
     # ユーザー名からモデル情報を取得
-    user = User.objects.get(userName=username)
-    if user.masterMode:
+    user = User.objects.get(username=username)
+    if user.is_staff:
         mode_str = "（管理者）"
-    mail = user.mail
+    mail = user.email
     params = {
         'username' : f"{username}{mode_str}",
         'mail' : f"メールアドレス : {mail}"
     }
-    return render(request, 'MyPage.html', params)
+    return render(request, 'MyPage_Admini.html', params)
 
 def PriceList(request):
     return render(request, 'PriceList.html')
