@@ -7,18 +7,30 @@
     <link rel="stylesheet" href="{% static 'css/AccessStyle.css' %}">
 </head>
 <body>
-    <h2>アクセス</h2>
-    <div class="address">
-        〒663-8112<br>
-        兵庫県西宮市甲子園口北町1-22ラックス2番館2階<br>
-        JR甲子園口 北側出口より徒歩1分<br>
-        レンタルスペースmansikkaさんで随時開催
-    </div>
+    <div class="container">
+        <aside class="sidebar">
+            <h2><a href="{% url 'ReserveApp:MyPage_Admini' %}">マイページ</a></h2>
+            <ul>
+                <li><a href="{% url 'ReserveApp:UserDB' %}">ユーザー管理</a></li>
+                <li><a href="{% url 'ReserveApp:UserCreate' %}">ユーザー追加</a></li>
+                <li><a href="#">メッセージ</a></li>
+                <li><a href="{% url 'ReserveApp:Logout' %}">ログアウト</a></li>
+            </ul>
+        </aside>
+        <div class="MainContainer">
+            <h2>アクセス</h2>
+            <div class="address">
+                〒663-8112<br>
+                兵庫県西宮市甲子園口北町1-22ラックス2番館2階<br>
+                JR甲子園口 北側出口より徒歩1分<br>
+                レンタルスペースmansikkaさんで随時開催
+            </div>
 
-    <div id="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3278.626642650663!2d135.37251747598623!3d34.73980427290595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f1f87a8fae2b%3A0xf73a7ef9af1528b2!2z44CSNjYzLTgxMTIg5YW15bqr55yM6KW_5a6u5biC55Sy5a2Q5ZyS5Y-j5YyX55S677yR4oiS77yS77ySIOODqeODg-OCr-OCueODi-eVqumkqA!5e0!3m2!1sja!2sjp!4v1755353473477!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div id="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3278.626642650663!2d135.37251747598623!3d34.73980427290595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f1f87a8fae2b%3A0xf73a7ef9af1528b2!2z44CSNjYzLTgxMTIg5YW15bqr55yM6KW_5a6u5biC55Sy5a2Q5ZyS5Y-j5YyX55S677yR4oiS77yS77ySIOODqeODg-OCr-OCueODi-eVqumkqA!5e0!3m2!1sja!2sjp!4v1755353473477!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
     </div>
-
 
 
 </body>

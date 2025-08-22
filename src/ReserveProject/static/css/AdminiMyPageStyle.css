@@ -22,9 +22,15 @@ body {
   font-size: 1.8em;
 }
 
+.sidebar h2 a{
+  color: white;
+  text-decoration: none;
+}
+
 .sidebar ul {
   list-style: none;
   padding: 0;
+  transition: color 0.3s;
 }
 
 .sidebar ul li {
@@ -128,8 +134,8 @@ body {
 }
 
 .card-icon {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   margin-bottom: 15px;
 }
 

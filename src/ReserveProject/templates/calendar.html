@@ -6,164 +6,175 @@
     <link href="{% static 'css/calendarStyle.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <h1>{{message}}</h1>
-    <table id="myTable" border="1">
-        <thead>
-            <tr>
-                <th>
-                    <a href="{% url 'ReserveApp:week_calendar_specific' prev_week_year prev_week_month prev_week_day %}">前週</a>
-                </th>
-            {% for date in dates %}
-                <th>{{ date|date:"Y-m-d (D)" }}</th>
-            {% endfor %}
-                <th>
-                    <a href="{% url 'ReserveApp:week_calendar_specific' next_week_year next_week_month next_week_day %}">次週</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th >9:00～10:00</th>
-                {% for result in 9time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                    
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >9:00～10:00</th>
-            </tr>
-            <tr>
-                <th >10:00～11:00</th>
-                {% for result in 10time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >10:00～11:00</th>
-            </tr>
-            <tr>
-                <th >11:00～12:00</th>
-                {% for result in 11time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >11:00～12:00</th>
-            </tr>
-            <tr>
-                <th >12:00～13:00</th>
-                {% for result in 12time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >12:00～13:00</th>
-            </tr>
-            <tr>
-                <th >13:00～14:00</th>
-                {% for result in 13time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >13:00～14:00</th>
-            </tr>
-            <tr>
-                <th >14:00～15:00</th>
-                {% for result in 14time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >14:00～15:00</th>
-            </tr>
-            <tr>
-                <th >15:00～16:00</th>
-                {% for result in 15time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >15:00～16:00</th>
-            </tr>
-            <tr>
-                <th >16:00～17:00</th>
-                {% for result in 16time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >16:00～17:00</th>
-            </tr>
-            <tr>
-                <th >17:00～18:00</th>
-                {% for result in 17time %}
-                {% if result == "〇" %}
-                <td class="blue">
-                    {{result}}
-                </td>
-                {% else %}
-                <td class="red">
-                    {{result}}
-                </td>
-                {% endif %}
-                {% endfor %}
-                <th >17:00～18:00</th>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <aside class="sidebar">
+            <h2><a href="{% url 'ReserveApp:MyPage_Admini' %}">マイページ</a></h2>
+            <ul>
+                <li><a href="{% url 'ReserveApp:UserDB' %}">ユーザー管理</a></li>
+                <li><a href="{% url 'ReserveApp:UserCreate' %}">ユーザー追加</a></li>
+                <li><a href="#">メッセージ</a></li>
+                <li><a href="{% url 'ReserveApp:Logout' %}">ログアウト</a></li>
+            </ul>
+        </aside>
+        <div class="MainContainer">
+            <h1>{{message}}</h1>
+            <table id="myTable" border="1">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="{% url 'ReserveApp:week_calendar_specific' prev_week_year prev_week_month prev_week_day %}">前週</a>
+                        </th>
+                    {% for date in dates %}
+                        <th>{{ date|date:"Y-m-d (D)" }}</th>
+                    {% endfor %}
+                        <th>
+                            <a href="{% url 'ReserveApp:week_calendar_specific' next_week_year next_week_month next_week_day %}">次週</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th >9:00～10:00</th>
+                        {% for result in 9time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                            
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >9:00～10:00</th>
+                    </tr>
+                    <tr>
+                        <th >10:00～11:00</th>
+                        {% for result in 10time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >10:00～11:00</th>
+                    </tr>
+                    <tr>
+                        <th >11:00～12:00</th>
+                        {% for result in 11time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >11:00～12:00</th>
+                    </tr>
+                    <tr>
+                        <th >12:00～13:00</th>
+                        {% for result in 12time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >12:00～13:00</th>
+                    </tr>
+                    <tr>
+                        <th >13:00～14:00</th>
+                        {% for result in 13time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >13:00～14:00</th>
+                    </tr>
+                    <tr>
+                        <th >14:00～15:00</th>
+                        {% for result in 14time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >14:00～15:00</th>
+                    </tr>
+                    <tr>
+                        <th >15:00～16:00</th>
+                        {% for result in 15time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >15:00～16:00</th>
+                    </tr>
+                    <tr>
+                        <th >16:00～17:00</th>
+                        {% for result in 16time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >16:00～17:00</th>
+                    </tr>
+                    <tr>
+                        <th >17:00～18:00</th>
+                        {% for result in 17time %}
+                        {% if result == "〇" %}
+                        <td class="blue">
+                            {{result}}
+                        </td>
+                        {% else %}
+                        <td class="red">
+                            {{result}}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        <th >17:00～18:00</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     
-    <h2>
-        <a href="{% url 'ReserveApp:ManagerMainMenu' %}">マイページ</a>
-    </h2>
+
 
 
     <script>

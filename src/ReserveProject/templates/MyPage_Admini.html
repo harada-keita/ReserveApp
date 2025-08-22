@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>マイページ</title>
-  <link rel="stylesheet" href="{% static 'css/MyPageStyle.css' %}">
+  <link rel="stylesheet" href="{% static 'css/AdminiMyPageStyle.css' %}">
 </head>
 <body>
   <div class="container">
 
     <aside class="sidebar">
-      
-      <h2>マイページ</h2>
-      
+      <h2><a href="{% url 'ReserveApp:MyPage_Admini' %}">マイページ</a></h2>
       <ul>
         <li><a href="{% url 'ReserveApp:UserDB' %}">ユーザー管理</a></li>
         <li><a href="{% url 'ReserveApp:UserCreate' %}">ユーザー追加</a></li>
@@ -19,15 +17,6 @@
         <li><a href="{% url 'ReserveApp:Logout' %}">ログアウト</a></li>
       </ul>
     </aside>
-
-    <header>
-      {% if user.is_authenticated %}
-        <span>ようこそ、{{ user.username }} さん！</span>
-        <a href="{% url 'ReserveApp:Logout' %}">ログアウト</a>
-      {% else %}
-        <a href="{% url 'ReserveApp:Login' %}">ログイン</a>
-      {% endif %}
-    </header>
 
     <main class="main-content">
       <img src="{% static 'images/title.png'%}" class="logo-image">

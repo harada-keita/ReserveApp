@@ -27,4 +27,4 @@ class Schedule(models.Model):
     start = models.DateTimeField('開始時間')
     end = models.DateTimeField('終了時間')
     def __str__(self):
-        return self.user.userName + ' : ' + self.place.name + ' : ' + str(self.start)
+        return self.user.username + ' : ' + self.place.name + ' : ' + str(self.start)

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # ログイン機能
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 # application/write_data.pyをインポートする
@@ -12,6 +12,10 @@ from .models import User, Schedule, Place
 from .forms import UserDBForm, UserForm
 #以下カレンダー
 import datetime
+from zoneinfo import ZoneInfo
+from django.utils.timezone import make_aware
+import pytz
+
 
 
 # Create your views here.
@@ -19,25 +23,6 @@ def Login(request):
     params = {
         'title' : 'ログイン画面'
     }
-    # if request.method == 'POST':
-    #     input_username = request.POST.get('userName')
-    #     input_password = request.POST.get('password')
-
-    #     try:
-    #         user = User.objects.get(username=input_username)
-    #     except User.DoesNotExist:
-    #         messages.error(request, 'ユーザー名が存在しません。')
-    #         return render(request, 'login.html')
-
-    #     if not check_password(input_password, user.password):
-    #         messages.error(request, 'パスワードが間違っています。')
-    #         return render(request, 'login.html')
-
-    #     # 認証成功 → セッションに保存（Django標準の login() は使えない）
-    #     request.session['user_id'] = user.id
-    #     request.session['user_name'] = user.userName
-    #     request.session['is_master'] = user.masterMode
-    #     return redirect('ReserveApp:UserMainMenu')
     if request.method == 'POST':
         input_username = request.POST.get('username')
         input_password = request.POST.get('password')
@@ -57,14 +42,25 @@ def Login(request):
     return render(request, 'login.html', params)
 
 
-
-
-
-
 def Logout(request):
+    logout(request)
     return render(request, 'logout.html')
 
-
+@login_required
+def MyPage_Admini(request):
+    # ログインページからユーザー名を取得
+    username = request.session.get('user_name')
+    mode_str = None
+    # ユーザー名からモデル情報を取得
+    user = User.objects.get(username=username)
+    if user.is_staff:
+        mode_str = "（管理者）"
+    mail = user.email
+    params = {
+        'username' : f"{username}{mode_str}",
+        'mail' : f"メールアドレス : {mail}"
+    }
+    return render(request, 'MyPage_Admini.html', params)
 
 def ManagerMainMenu(request):
     #ログインページからユーザー名を取得
@@ -92,7 +88,6 @@ def ReserveMenu(request):
     params = {
         'title' : '予約システム'
     }
-
     return render(request, 'ReserveMenu.html', params)
 
 def UserDB(request):
@@ -130,13 +125,13 @@ def UserCreate(request):
 def UserEdit(request, num):
     obj = User.objects.get(id=num)
     if (request.method == 'POST'):
-        # user = UserForm(request.POST, instance=obj)
-        # user.save()
+        user = UserForm(request.POST, instance=obj)
+        user.save()
         return redirect('ReserveApp:UserDB')
     params={
         'title' : 'ユーザー編集画面',
         'id' : num,
-        # 'form' : UserForm(instance=obj)#ここの書き方はforms.pyで定義したFormがModelFormを継承した場合に使用可能。
+        'form' : UserForm(instance=obj)#ここの書き方はforms.pyで定義したFormがModelFormを継承した場合に使用可能。
     }
     return render(request, 'UserEdit.html', params)
 
@@ -161,9 +156,9 @@ def call_write_data(req):
         return HttpResponse()
     
 
-    
+@login_required
 def week_calendar(request, year=None, month=None, day=None):
-    place = '会議室１'
+    place = '会議室A'
     nine_time_result = []
     ten_time_result = []
     eleven_time_result = []
@@ -201,11 +196,11 @@ def week_calendar(request, year=None, month=None, day=None):
 
     reserved_data = []
     reserved_data = Schedule.objects.all()
-    #print(reserved_data)
+    print(reserved_data)
     for index, date in enumerate(dates):#こっち(date)は表示する日付
-        #print(date.date())
+        print(date.date())
         for i in reserved_data:#こっち(i)が予約されているデータ
-            #print(i.start.date())
+            print(i.start.date())
             #日付が一致した場合
             if i.start.date() == date.date():
                 print(i.start.hour)
@@ -258,19 +253,22 @@ def ReserveDisplay(request):
 
     if (request.method == 'POST'):
         date = request.session.get("day")
-        print(date)
         date_str = date.split(" ")[0] #datetime型に変換するために文字列内から必要な文字のみを取得
         time = request.session.get("time")
         start_time = time.split("～")[0] # 9:00～10:00の場合、9:00の部分を取得
-        print(date)
-        combine_datetime = date_str + " " + start_time #年月日 時:分
-        
-        reserve_start_datetime = datetime.datetime.strptime(combine_datetime, "%Y-%m-%d %H:%M")
+        combine_datetime_str = date_str + " " + start_time #年月日 時:分
+        # 下のlocalizeの引数はdatetime型の必要があるためstrから変換
+        combine_datetime = datetime.datetime.strptime(combine_datetime_str, "%Y-%m-%d %H:%M")
+        # UTCとして扱いたい場合（タイムゾーンの影響を受けない）←「setting.py」のタイムゾーンを東京にした状態で表の時間を取得すると自動で変換されて異なる時間が予約されたことになってしまう
+        dt_utc = pytz.utc.localize(combine_datetime)
+        # 予約の開始時間（表と同じ日時）
+        reserve_start_datetime = dt_utc
+        # 予約の終了時間（開始時間＋１時間）
         reserve_end_datetime = reserve_start_datetime + datetime.timedelta(hours=1)
-        #ユーザーモデルを取得するためのユーザー名のstrを取得
-        user_name = request.session.get('username')
+        #ユーザーモデルを取得するためのユーザー名のstrを取得(マイページから？)
+        user_name = request.session.get('user_name')
         #ユーザーモデル情報を取得
-        reserve_user = User.objects.get(userName=user_name)
+        reserve_user = User.objects.get(username=user_name)
         #場所はとりあえずベタ打ちで登録(ユーザーと同様)
         place_name = '会議室A'
         reserve_place = Place.objects.get(name=place_name)
@@ -293,8 +291,8 @@ def ReserveDisplay(request):
 
 
 def MyReserve(request):
-        # ログインページからユーザー名を取得
-    username = request.session.get('username')
+    # ログインページからユーザー名を取得
+    username = request.session.get('user_name')
     #ユーザー情報を取得するためにIDを取得
     userID = request.session.get('userID')
     params = {
@@ -309,7 +307,7 @@ def MyReserve(request):
     return render(request, 'MyReserve.html', params)
 
 def ReserveDelete(request, num):
-    username = request.session.get('username')
+    username = request.session.get('user_name')
     user = User.objects.get(userName=username)
     schedule = Schedule.objects.get(id=num, user=user)
     if (request.method == 'POST'):
@@ -322,21 +320,7 @@ def ReserveDelete(request, num):
     return render(request, 'ReserveDelete.html', params)
 
 
-@login_required(login_url='login/')
-def MyPage_Admini(request):
-    # ログインページからユーザー名を取得
-    username = request.session.get('user_name')
-    mode_str = None
-    # ユーザー名からモデル情報を取得
-    user = User.objects.get(username=username)
-    if user.is_staff:
-        mode_str = "（管理者）"
-    mail = user.email
-    params = {
-        'username' : f"{username}{mode_str}",
-        'mail' : f"メールアドレス : {mail}"
-    }
-    return render(request, 'MyPage_Admini.html', params)
+
 
 def PriceList(request):
     return render(request, 'PriceList.html')

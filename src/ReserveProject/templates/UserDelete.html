@@ -12,10 +12,10 @@
     <p>※以下のレコードを削除します</p>
     <table>
         <tr><th>ID</th><td>{{obj.id}}</td></tr>
-        <tr><th>氏名</th><td>{{obj.userName}}</td></tr>
+        <tr><th>氏名</th><td>{{obj.username}}</td></tr>
         <tr><th>血液型</th><td>{{obj.blood}}</td></tr>
-        <tr><th>メールアドレス</th><td>{{obj.mail}}</td></tr>
-        <tr><th>登録日</th><td>{{obj.entryDate}}</td></tr>
+        <tr><th>メールアドレス</th><td>{{obj.email}}</td></tr>
+        <tr><th>登録日</th><td>{{obj.date_joined}}</td></tr>
         <form action="{% url 'ReserveApp:Delete' obj.id %}" method="post">
             {% csrf_token %}
             <tr><th></th><td>

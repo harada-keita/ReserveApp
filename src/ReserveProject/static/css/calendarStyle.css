@@ -1,10 +1,67 @@
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+.MainContainer{
+    margin-left: 20px;
+}
+
 table { border-collapse: collapse; width: 100%; }
 td, th { border: 1px solid #ccc; padding: 8px; text-align: center; height: 80px; font-size: 100%; }
 
 .blue{
     background-color: aqua;
+    cursor: pointer;
 }
 
 .red{
     background-color: hotpink;
+    cursor: not-allowed;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 30px 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+
+.sidebar h2 a{
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    transition: color 0.3s;
+}
+
+.sidebar ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    color: #1abc9c;
 }

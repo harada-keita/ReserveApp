@@ -33,9 +33,10 @@
             </div>
                 <button type="submit">ログイン</button>
         </form>
-
-        <a href="{% url 'ReserveApp:UserCreate' %}">ユーザー登録</a>
-
+        <div class="UserCreateLink">
+        <a href="{% url 'ReserveApp:UserCreate' %}" >ユーザー登録はこちらから
+        </a>
+        </div>
         <script>
             function clickButton() {
                 var txt = document.getElementById("username").value;

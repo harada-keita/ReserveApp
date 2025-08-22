@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
 TIME_ZONE = 'Asia/Tokyo'
 
@@ -134,6 +134,9 @@ AUTH_USER_MODEL = 'ReserveApp.User'
 
 
 # # 以下ログイン状態の保持時間などの設定
-# SESSION_COOKIE_AGE = 10 # 10秒
+SESSION_COOKIE_AGE = 3600 # 3600秒(30分)
 
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = True # ブラウザを閉じたら保持しない
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # ブラウザを閉じたら保持しない
+
+
+LOGIN_URL = '/login/' # １つ目のスラッシュがないとログイン画面ではなく、エラー画面に飛ばされる

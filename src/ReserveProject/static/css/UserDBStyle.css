@@ -3,11 +3,58 @@ th,td {
     padding: 10px;      /* 余白指定 */
 }
 
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
 table {
     border-collapse:  collapse; /* セルの線を重ねる */
+    margin-left: 20px;
 }
 
 body {
-    overflow: hidden;
+    /* 明示的にマージンを0にする必要がある */
+    margin: 0;
     background: linear-gradient(to right, #7ac87eb9, #0abfbc);
+}
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 30px 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+.sidebar h2 a{
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    transition: color 0.3s;
+}
+
+.sidebar ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    color: #1abc9c;
+}
+
+.MMainContainer{
+    margin-left: 10px;
 }
